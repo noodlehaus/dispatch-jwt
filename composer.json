@@ -1,0 +1,27 @@
+{
+  "name": "noodlehaus/dispatch-jwt",
+  "type": "library",
+  "description": "JWT middleware and helpers for noodlehaus/dispatch",
+  "keywords": ["jwt", "microframework", "router", "micro", "microphp"],
+  "homepage": "http://github.com/noodlehaus/dispatch-jwt",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "noodlehaus",
+      "role": "Developer",
+      "homepage": "http://github.com/noodlehaus/"
+    }
+  ],
+  "require": {
+    "php": ">= 8.0.0"
+  },
+  "autoload": {
+    "files": [
+      "dispatch-jwt.php"
+    ]
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^10.0",
+    "ext-xdebug": "*"
+  }
+}
