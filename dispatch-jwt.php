@@ -1,10 +1,31 @@
 <?php declare(strict_types=1);
 
 # creates JWT callable middleware
-function jwt_middleware(string $secret, callable $fail): callable {
+function jwt_middleware(
+  string $secret,
+  callable $fail = null,
+  callable $validate = null
+): callable {
 
-  return function (callable $next, array $params, ...$args) use ($secret, $fail) {
+  # set default validator that just says yes
+  if ($validate === null) {
+    $validate = fn() => true;
+  }
 
+  # default failure handler just returns 401
+  if ($fail === null) {
+    $fail = function () {
+      http_response_code(401);
+      print 'Invalid JWT';
+      exit;
+    };
+  }
+
+  # capture parameters into generated middleware function
+  return function (callable $next, array $params, ...$args)
+      use ($secret, $fail, $validate) {
+
+    # right now, we only support 'Bearer <token>'
     $bearertxt = 'Bearer ';
     $headerval = $_SERVER['HTTP_AUTHORIZATION'] ?? null;
 
@@ -17,8 +38,11 @@ function jwt_middleware(string $secret, callable $fail): callable {
     }
 
     $jwt = substr($headerval, strlen('Bearer '));
-    $data = jwt_decode($jwt, $secret);
+    if (!$validate($jwt, $secret)) {
+      return $fail();
+    }
 
+    $data = jwt_decode($jwt, $secret);
     if (!$data) {
       return $fail();
     }
