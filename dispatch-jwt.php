@@ -30,7 +30,7 @@ function jwt_middleware(
     $headerval = $_SERVER['HTTP_AUTHORIZATION'] ?? null;
 
     if (empty($headerval)) {
-      return $fail;
+      return $fail();
     }
 
     if (substr($headerval, 0, strlen($bearertxt)) !== $bearertxt) {
