@@ -13,7 +13,8 @@
     }
   ],
   "require": {
-    "php": ">= 8.0.0"
+    "php": ">= 8.0.0",
+    "noodlehaus/dispatch": "^11.0"
   },
   "autoload": {
     "files": [

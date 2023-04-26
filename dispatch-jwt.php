@@ -75,7 +75,7 @@ function jwt_decode(string $jwt, string $secret): ?array {
     return null;
   }
 
-  [$enchead, $encdata, $encsig] = $parts;
+  [$enchead, $encdata, $encsign] = $parts;
 
   $head = json_decode(base64_decode(strtr($enchead, '-_', '+/')), true);
   $data = json_decode(base64_decode(strtr($encdata, '-_', '+/')), true);
